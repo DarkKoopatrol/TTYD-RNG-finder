@@ -177,7 +177,7 @@ NO_INLINE uint32_t GetRngNoRange()
 
     sequenceArr.entries -= i;
     uint64_t packedBounds[sequenceArr.entries]; // Faster than struct
-    for (size_t j = 0; j < sequenceArr.entries; j++)
+    for (size_t j = 0; j < sequenceArr.entries; j++, i++)
     {
         if (sequenceArr.data[i] == 5)
         {
@@ -189,7 +189,6 @@ NO_INLINE uint32_t GetRngNoRange()
             const uint32_t upperBound = lowerBound + 1999;
             packedBounds[j] = ((uint64_t)lowerBound << 32 | upperBound);
         }
-        i++;
     }
 
     for (uint32_t rng = (packedBounds[0] >> 32) << 16; rng < 0x80000000; rng += 8000 << 16)
@@ -330,7 +329,7 @@ NO_INLINE uint32_t GetRngWithinRange(const uint32_t initial, const uint32_t adva
 
     sequenceArr.entries -= i;
     uint64_t packedBounds[sequenceArr.entries]; // Faster than struct
-    for (size_t j = 0; j < sequenceArr.entries; j++)
+    for (size_t j = 0; j < sequenceArr.entries; j++, i++)
     {
         if (sequenceArr.data[i] == 5)
         {
@@ -342,7 +341,6 @@ NO_INLINE uint32_t GetRngWithinRange(const uint32_t initial, const uint32_t adva
             const uint32_t upperBound = lowerBound + 1999;
             packedBounds[j] = ((uint64_t)lowerBound << 32 | upperBound);
         }
-        i++;
     }
 
     for (uint32_t rng = initial; rng != targetRNG;)
