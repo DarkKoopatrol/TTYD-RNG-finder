@@ -113,10 +113,20 @@ void GetUserInput(struct DynamicUint8Array *restrict sequenceArr, uint8_t minSiz
         }
         else if (ch == '9')
         {
-            printf("Restarting RNG calculation.\n");
-            while (getchar() != '\n');
+            while ((ch = getchar()) != '\n')
+            {
+                if (('0' > ch) || (ch > '5'))
+                {
+                    printf("Invalid input. Line rejected.\nInput: ");
+                    while (getchar() != '\n');
+                    sequenceArr->entries = savedSize;
+                    goto exit;
+                }
+            }
             sequenceArr->data[0] = 9;
+            printf("Restarting RNG calculation.\n");
             return;
+            exit:;
         }
         else // Invalid input, reject and clear line
         {
