@@ -115,7 +115,7 @@ void GetUserInput(struct DynamicUint8Array *restrict sequenceArr, uint8_t minSiz
         {
             while ((ch = getchar()) != '\n')
             {
-                if (('0' > ch) || (ch > '5'))
+                if (((ch > '5') && (ch != '9')) || ('0' > ch))
                 {
                     printf("Invalid input. Line rejected.\nInput: ");
                     while (getchar() != '\n');
