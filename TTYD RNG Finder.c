@@ -35,9 +35,10 @@ const uint32_t ADDI = 0x3039;
 #define Mul128_u32(lowbits, d) (((__uint128_t)(lowbits) * (d)) >> 64)
 #define ComputeM_u32(mod) (UINT64_C(0xFFFFFFFFFFFFFFFF) / (mod) + 1)
 #define FastMod(div, mod, m) (uint32_t)Mul128_u32((m) * (div), mod)
+#define FastModConst(div, mod) FastMod(div, mod, ComputeM_u32(mod))
 
 #define IncrementRngState(rng) ((rng) * MULTI + ADDI)
-#define RngModConst(rng, mod) FastMod((((rng) >> 16) & 0x7FFF), mod, ComputeM_u32(mod))
+#define RngModConst(rng, mod) FastModConst((((rng) >> 16) & 0x7FFF), mod)
 #define IncrementAndModConst(rng, mod) RngModConst(rng = IncrementRngState(rng), mod)
 
 
